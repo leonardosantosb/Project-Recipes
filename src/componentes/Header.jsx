@@ -14,16 +14,16 @@ function Header() {
           data-testid="profile-top-btn"
           src={ profileIcon }
           alt="human silhouette"
-          onClick={ () => history.push() }
+          onClick={ () => history.push('/profile') }
         />
         {/*         <h1 data-testid="page-title">
           {}
         </h1> */}
         <input
           type="image"
-          data-testid=" search-top-btn"
+          data-testid="search-top-btn"
           src={ searchIcon }
-          alt="deseno de uma lupa"
+          alt="desenho de uma lupa"
           onClick={ () => history.push() }
         />
       </section>
