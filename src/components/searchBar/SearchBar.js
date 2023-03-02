@@ -4,17 +4,15 @@ import styles from './SearchBar.module.css';
 export default function SearchBar() {
   return (
     <div className={ styles.searchBarMain }>
-      SearchBar
-      Barra de busca - Header
       {/* apenas para passa no teste mometaniamente */}
-      <p data-testid="search-top-btn">pp</p>
+      <p data-testid="search-top-btn">🌎</p>
       <label htmlFor="">
         teste anterior
         <input
           type="text"
-          name="radioBusca"
-          id=""
-          data-testid="search-input"
+          data-testid="search-top-btn"
+          // src={ profileIcon }
+          // onClick={ () => history.push() }
         />
       </label>
       {/* ........... */}
@@ -29,7 +27,7 @@ export default function SearchBar() {
         />
       </label>
       <label htmlFor="">
-        Busca de ingrediente:
+        Busca por nome:
         <input
           type="radio"
           name="radioBusca"
@@ -38,7 +36,7 @@ export default function SearchBar() {
         />
       </label>
       <label htmlFor="">
-        Busca de ingrediente:
+        Busca por letra:
         <input
           type="radio"
           name="radioBusca"
