@@ -3,13 +3,16 @@ import { useState, useMemo } from 'react';
 import LoginContext from './LoginContext';
 
 export function LoginProvider({ children }) {
-  const [login, setLogin] = useState([]);
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
 
   const values = useMemo(() => ({
-    login,
-    setLogin,
+    email,
+    setEmail,
+    senha,
+    setSenha,
 
-  }), [login]);
+  }), [email, senha]);
 
   return (
     <LoginContext.Provider value={ values }>
