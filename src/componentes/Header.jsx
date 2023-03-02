@@ -16,9 +16,9 @@ function Header() {
           alt="human silhouette"
           onClick={ () => history.push() }
         />
-        <h1 data-testid="page-title">
+        {/*         <h1 data-testid="page-title">
           {}
-        </h1>
+        </h1> */}
         <input
           type="image"
           data-testid=" search-top-btn"
