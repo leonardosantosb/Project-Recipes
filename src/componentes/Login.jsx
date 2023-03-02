@@ -5,13 +5,19 @@ export default function Login() {
     <>
       <h2>LOGIN</h2>
       <br />
-      <label htmlFor="email">
-        <input id="email" data-testid="email-input" placeholder="Email" />
-      </label>
+      <input
+        type="text"
+        id="email"
+        data-testid="email-input"
+        placeholder="Email"
+      />
       <br />
-      <label htmlFor="password">
-        <input id="password" data-testid="password-input" placeholder="Password" />
-      </label>
+      <input
+        type="text"
+        id="password"
+        data-testid="password-input"
+        placeholder="Password"
+      />
       <br />
       <button
         type="button"
