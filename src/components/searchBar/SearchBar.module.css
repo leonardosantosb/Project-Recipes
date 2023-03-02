@@ -1,0 +1,8 @@
+.searchBarMain {
+  align-items: center;
+  display: flex;
+  height: calc(100vh - 80px);
+  justify-content: center;
+  transition: all 1s ease-in-out;
+  width: 100%;
+}
