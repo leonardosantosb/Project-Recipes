@@ -4,11 +4,11 @@ import IconDrink from '../images/drinkIcon.svg';
 import IconMeal from '../images/mealIcon.svg';
 
 function footer() {
-  const history = useHistory();
+  // const history = useHistory();
 
-  const handleClick = ({ target }) => {
-    history.push('/');
-  };
+  // const handleClick = ({ target }) => {
+  //  history.push('/');
+  // };
 
   return (
     <footer
