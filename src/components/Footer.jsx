@@ -4,12 +4,6 @@ import IconDrink from '../images/drinkIcon.svg';
 import IconMeal from '../images/mealIcon.svg';
 
 function footer() {
-  // const history = useHistory();
-
-  // const handleClick = ({ target }) => {
-  //  history.push('/');
-  // };
-
   return (
     <footer
       data-testid="footer"
@@ -18,17 +12,21 @@ function footer() {
         display: 'flex',
       } }
     >
-      <img
-        src={ IconDrink }
-        alt="DrinksIcon"
-        data-testid="drinks-bottom-btn"
-      />
+      <a href="/drinks">
+        <img
+          src={ IconDrink }
+          alt="DrinksIcon"
+          data-testid="drinks-bottom-btn"
+        />
+      </a>
 
-      <img
-        src={ IconMeal }
-        data-testid="meals-bottom-btn"
-        alt="MealIcon"
-      />
+      <a href="/meals">
+        <img
+          src={ IconMeal }
+          data-testid="meals-bottom-btn"
+          alt="MealIcon"
+        />
+      </a>
     </footer>
   );
 }
