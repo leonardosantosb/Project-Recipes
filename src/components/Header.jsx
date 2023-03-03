@@ -21,15 +21,26 @@ function Header({ namePage }) {
           onClick={ () => history.push('/profile') } // redireciona para o profile
         />
         <h1 data-testid="page-title">{ namePage }</h1>
-        <input
-          type="image"
-          data-testid="search-top-btn"
-          src={ searchIcon }
-          alt="desenho de uma lupa"
-          onClick={ () => setIsSearch(!isSearch) } // clique para componente da barra de busca para mostrar a receita
-        />
+        {
+          (history.location.pathname !== '/profile'
+          && history.location.pathname !== '/done-recipes'
+          && history.location.pathname !== '/favorite-recipes')
+          && (
+            <>
+              <input
+                type="image"
+                data-testid="search-top-btn"
+                src={ searchIcon }
+                alt="desenho de uma lupa"
+                onClick={ () => setIsSearch(!isSearch) }
+              />
+              { isSearch === true && <SearchBar /> }
+            </>
+          )
+
+        }
+
       </section>
-      { isSearch === true && <SearchBar /> }
       {/* //implementa lógica para esconder e mostrar o input de busca. */}
     </header>
   );

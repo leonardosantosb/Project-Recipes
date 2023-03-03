@@ -6,7 +6,7 @@ export default function Meals() {
   return (
     <section>
       <div>
-        <h1>Meals</h1>
+        <h1 data-testid="page-title">Meals</h1>
         <Header />
       </div>
       <Footer />
