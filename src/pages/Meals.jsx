@@ -1,11 +1,16 @@
 import React from 'react';
+import Footer from '../componentes/Footer';
 import Header from '../components/Header';
 
 export default function Meals() {
   return (
-    <div>
-      Meals
-      <Header />
-    </div>
+   <section>
+      <div>
+        Meals
+        <Header />
+      </div>
+      <Footer />
+
+    </section>
   );
 }
