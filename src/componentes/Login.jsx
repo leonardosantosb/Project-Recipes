@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import LoginContext from '../context/LoginContext';
 
 export default function Login() {
+  const history = useHistory();
   const { email, setEmail, senha, setSenha } = useContext(LoginContext);
 
   const handleEmail = (valueEmail) => {
@@ -12,6 +14,7 @@ export default function Login() {
   };
   const handleClick = () => {
     localStorage.setItem('user', JSON.stringify({ email }));
+    history.push('/meals');
   };
 
   const disableButton = () => {
