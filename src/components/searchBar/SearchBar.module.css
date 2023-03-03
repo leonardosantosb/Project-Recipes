@@ -1,0 +1,10 @@
+.searchBarMain {
+  align-items: center;
+  background-color: salmon;
+  display: flex;
+  flex-direction: column;
+  height: calc(30vh - 80px);
+  justify-content: center;
+  transition: all 1s ease-in-out;
+  width: 100%;
+}

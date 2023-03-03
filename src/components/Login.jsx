@@ -5,6 +5,7 @@ import LoginContext from '../context/LoginContext';
 export default function Login() {
   const history = useHistory();
   const { email, setEmail, senha, setSenha } = useContext(LoginContext);
+  const history = useHistory();
 
   const handleEmail = (valueEmail) => {
     setEmail(valueEmail);
