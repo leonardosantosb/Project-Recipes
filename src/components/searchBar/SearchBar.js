@@ -55,10 +55,6 @@ export default function SearchBar() {
     }
   };
 
-  // useEffect(() => {
-  //   handleSearch();
-  // }, []);
-
   console.log(receiveApi);
   console.log(inputRadio);
   console.log(inputSearchText);
