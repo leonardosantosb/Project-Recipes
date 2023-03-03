@@ -5,6 +5,6 @@ import App from '../App';
 describe('Teste do Menu inferior', () => {
   test('Verificar se duas imagens', () => {
     render(<App />, ['/profile']);
-    expect(screen.getByRole({}))
+    expect(screen.getByRole({}));
   });
 });
