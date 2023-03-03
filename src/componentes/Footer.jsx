@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import IconDrink from '../images/drinkIcon.svg';
 import IconMeal from '../images/mealIcon.svg';
 
@@ -22,7 +22,6 @@ function footer() {
         src={ IconDrink }
         alt="DrinksIcon"
         data-testid="drinks-bottom-btn"
-        onClick={ handleClick }
       />
 
       <img
