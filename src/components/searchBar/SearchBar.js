@@ -1,53 +1,51 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './SearchBar.module.css';
 import requestApis from '../../services/requestApis';
-import { FILTER_BY_MAIN_INGREDIENT,
-  LIST_ALL_MEALS_BY_1_LETTER,
-  SEARCH_MEAL_BY_NAME } from '../../services/endpoints';
+import SearchBarContext from '../../context/SearchBarContext';
+// import { FILTER_BY_MAIN_INGREDIENT,
+//   LIST_ALL_MEALS_BY_1_LETTER,
+//   SEARCH_MEAL_BY_NAME } from '../../services/endpoints';
 
 const firstLetter = 'first-letter';
 export default function SearchBar() {
   const [inputSearchText, setInputSearchText] = useState('');
-  // const [url, setUrl] = useState('');
-  // const [letraUm, setLetraUm] = useState('');
   const [receiveApi, setReceiveApi] = useState([]);
   const [inputRadio, setInputRadio] = useState('');
+  const { foodDrink } = useContext(SearchBarContext);
 
   const handleOptions = () => {
     if (inputRadio === 'ingredient') {
       // console.log(`ingredient ${FILTER_BY_MAIN_INGREDIENT}${inputSearchText}`);
-      return `${FILTER_BY_MAIN_INGREDIENT}${inputSearchText}`;
+      return `https://www.the${foodDrink}db.com/api/json/v1/1/filter.php?i=${inputSearchText}`;
     }
 
     if (inputRadio === firstLetter) {
       // console.log(`first-lettess ${LIST_ALL_MEALS_BY_1_LETTER}${inputSearchText}`);
-      // setLetraUm(inputRadio);
-      return `${LIST_ALL_MEALS_BY_1_LETTER}${inputSearchText}`;
+      return `https://www.the${foodDrink}db.com/api/json/v1/1/search.php?f=${inputSearchText}`;
     }
 
     if (inputRadio === 'name') {
-      // console.log(`name ${SEARCH_MEAL_BY_NAME}${inputSearchText}`);
-      return `${SEARCH_MEAL_BY_NAME}${inputSearchText}`;
+      console.log(`https://www.the${foodDrink}db.com/api/json/v1/1/search.php?s=${inputSearchText}`);
+      return `https://www.the${foodDrink}db.com/api/json/v1/1/search.php?s=${inputSearchText}`;
     }
   };
+
+  console.log(foodDrink);
 
   const handleChange = ({ target: { value, type } }) => {
     console.log(type);
     if (type === 'radio') {
       console.log(value);
       setInputRadio(value);
-      // handleOptions(value);
     }
     if (type === 'text') {
       console.log(value);
-      // handleOptions(value);
       setInputSearchText(value);
     }
   };
 
   const handleSearch = async () => {
     if (inputSearchText.length > 1 && inputRadio === firstLetter) {
-      // setLetraUm('');
       global.alert('Your search must have only 1 (one) character');
     } else {
       // console.log(url);
@@ -113,11 +111,6 @@ export default function SearchBar() {
       >
         Buscar
       </button>
-      {/* {
-        receiveApi?.map((e) => (
-          <p key={ e.id }>{e}</p>
-        ))
-      } */}
     </div>
   );
 }

@@ -1,10 +1,9 @@
 const requestApis = async (url) => {
-  console.log(url);
+  // console.log(url);
   const response = await fetch(url);
-  console.log(response);
+  // console.log(response);
   const data = await response.json();
-  console.log(data);
-
+  // console.log(data);
   return data;
 };
 

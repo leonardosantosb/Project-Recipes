@@ -3,13 +3,16 @@ import React from 'react';
 import './App.css';
 import Routes from './Routes';
 import { LoginProvider } from './context/LoginProvider';
+import SearchBarProvider from './context/SearchBarProvider';
 
 function App() {
   return (
     <LoginProvider>
-      <Switch>
-        <Routes />
-      </Switch>
+      <SearchBarProvider>
+        <Switch>
+          <Routes />
+        </Switch>
+      </SearchBarProvider>
     </LoginProvider>
   );
 }
