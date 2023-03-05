@@ -6,6 +6,7 @@ import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
 import DoneRecipies from './pages/DoneRecipies';
 import FavoritesRecipies from './pages/FavoritesRecipies';
+import Details from './components/details/Details';
 
 function Routes() {
   return (
@@ -15,13 +16,13 @@ function Routes() {
       <Route exact path="/drinks" component={ Drinks } />
       <Route
         exact
-        path="/meals/:id-da-receita"
-        component={ Meals /* não pode possuir header */ }
+        path="/meals/:id"
+        component={ Details /* não pode possuir header */ }
       />
       <Route
         exact
-        path="/drinks/:id-da-receita"
-        component={ Drinks /* não pode possuir header */ }
+        path="/drinks/:id"
+        component={ Details /* não pode possuir header */ }
       />
       <Route
         exact

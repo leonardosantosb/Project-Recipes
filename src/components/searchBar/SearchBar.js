@@ -1,17 +1,20 @@
 import React, { useContext, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import styles from './SearchBar.module.css';
 import requestApis from '../../services/requestApis';
 import SearchBarContext from '../../context/SearchBarContext';
+// import Drinks from '../../pages/Drinks';
 // import { FILTER_BY_MAIN_INGREDIENT,
 //   LIST_ALL_MEALS_BY_1_LETTER,
 //   SEARCH_MEAL_BY_NAME } from '../../services/endpoints';
 
 const firstLetter = 'first-letter';
 export default function SearchBar() {
-  const [inputSearchText, setInputSearchText] = useState('');
-  const [receiveApi, setReceiveApi] = useState([]);
   const [inputRadio, setInputRadio] = useState('');
-  const { foodDrink } = useContext(SearchBarContext);
+  const { foodDrink, setInputSearchText,
+    inputSearchText, setReceiveApi } = useContext(SearchBarContext);
+  const history = useHistory();
+  const location = useLocation();
 
   const handleOptions = () => {
     if (inputRadio === 'ingredient') {
@@ -30,7 +33,7 @@ export default function SearchBar() {
     }
   };
 
-  console.log(foodDrink);
+  // console.log(foodDrink);
 
   const handleChange = ({ target: { value, type } }) => {
     console.log(type);
@@ -46,16 +49,38 @@ export default function SearchBar() {
 
   const handleSearch = async () => {
     if (inputSearchText.length > 1 && inputRadio === firstLetter) {
-      global.alert('Your search must have only 1 (one) character');
-    } else {
-      // console.log(url);
-      setReceiveApi(await requestApis(handleOptions()));
+      return global.alert('Your search must have only 1 (one) character');
     }
+
+    // console.log(url);
+    const result = await requestApis(handleOptions());
+    setReceiveApi(result);
+    // console.log('aqui', result.meals.length);
+    // console.log('sdubooooooooo', location.pathname);
+    // console.log('testando ele', `${location.pathname}/${result.meals[0].idMeal}`);
+
+    if (location.pathname === '/meals') {
+      return result.meals.length === 1 && (history
+        .push(`${location.pathname}/${result.meals[0].idMeal}`));
+    }
+    // console.log('s77777777777oo', location.pathname);
+    if (location.pathname === '/drinks') {
+      console.log('xablau');
+      return result.drinks.length === 1 && (history
+        .push(`${location.pathname}/${result.drinks[0].idDrink}`));
+      // return history.push(url);
+    }
+
+    // result.history.push(`/${location.pathname}/${result.(meals[0].idMeal
   };
 
-  console.log(receiveApi);
-  console.log(inputRadio);
-  console.log(inputSearchText);
+  // useEffect(() => {
+  //   console.log(location.pathname);
+  // }, []);
+
+  // console.log(receiveApi);
+  // console.log(inputRadio);
+  // console.log(inputSearchText);
 
   return (
     <div className={ styles.searchBarMain }>

@@ -4,15 +4,25 @@ import SearchBarContext from './SearchBarContext';
 
 export default function SearchBarProvider({ children }) {
   const [foodDrink, setFoodDrink] = useState('meal');
+  const [inputSearchText, setInputSearchText] = useState('');
+  const [receiveApi, setReceiveApi] = useState([]);
 
   const context = useMemo(
     () => ({
       foodDrink,
+      inputSearchText,
+      receiveApi,
+      setReceiveApi,
       setFoodDrink,
+      setInputSearchText,
     }),
     [
       foodDrink,
+      inputSearchText,
+      receiveApi,
+      setReceiveApi,
       setFoodDrink,
+      setInputSearchText,
     ],
   );
 
