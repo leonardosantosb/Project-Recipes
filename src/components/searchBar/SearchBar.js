@@ -1,63 +1,96 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import styles from './SearchBar.module.css';
 import requestApis from '../../services/requestApis';
-import { FILTER_BY_MAIN_INGREDIENT,
-  LIST_ALL_MEALS_BY_1_LETTER,
-  SEARCH_MEAL_BY_NAME } from '../../services/endpoints';
+import SearchBarContext from '../../context/SearchBarContext';
+// import Drinks from '../../pages/Drinks';
+// import { FILTER_BY_MAIN_INGREDIENT,
+//   LIST_ALL_MEALS_BY_1_LETTER,
+//   SEARCH_MEAL_BY_NAME } from '../../services/endpoints';
 
+// Variaveis
 const firstLetter = 'first-letter';
+const msgAlertNoScreen = 'Sorry, we haven\'t found any recipes for these filters.';
+
 export default function SearchBar() {
-  const [inputSearchText, setInputSearchText] = useState('');
-  // const [url, setUrl] = useState('');
-  // const [letraUm, setLetraUm] = useState('');
-  const [receiveApi, setReceiveApi] = useState([]);
   const [inputRadio, setInputRadio] = useState('');
+  const { foodDrink, setInputSearchText,
+    inputSearchText, setReceiveApi } = useContext(SearchBarContext);
+  const history = useHistory();
+  const location = useLocation();
 
   const handleOptions = () => {
     if (inputRadio === 'ingredient') {
       // console.log(`ingredient ${FILTER_BY_MAIN_INGREDIENT}${inputSearchText}`);
-      return `${FILTER_BY_MAIN_INGREDIENT}${inputSearchText}`;
+      return `https://www.the${foodDrink}db.com/api/json/v1/1/filter.php?i=${inputSearchText}`;
     }
 
     if (inputRadio === firstLetter) {
       // console.log(`first-lettess ${LIST_ALL_MEALS_BY_1_LETTER}${inputSearchText}`);
-      // setLetraUm(inputRadio);
-      return `${LIST_ALL_MEALS_BY_1_LETTER}${inputSearchText}`;
+      return `https://www.the${foodDrink}db.com/api/json/v1/1/search.php?f=${inputSearchText}`;
     }
 
     if (inputRadio === 'name') {
-      // console.log(`name ${SEARCH_MEAL_BY_NAME}${inputSearchText}`);
-      return `${SEARCH_MEAL_BY_NAME}${inputSearchText}`;
+      // console.log(`https://www.the${foodDrink}db.com/api/json/v1/1/search.php?s=${inputSearchText}`);
+      return `https://www.the${foodDrink}db.com/api/json/v1/1/search.php?s=${inputSearchText}`;
     }
   };
 
+  // console.log(foodDrink);
+
   const handleChange = ({ target: { value, type } }) => {
-    console.log(type);
+    // console.log(type);
     if (type === 'radio') {
-      console.log(value);
+      // console.log(value);
       setInputRadio(value);
-      // handleOptions(value);
     }
     if (type === 'text') {
-      console.log(value);
-      // handleOptions(value);
+      // console.log(value);
       setInputSearchText(value);
     }
   };
 
   const handleSearch = async () => {
     if (inputSearchText.length > 1 && inputRadio === firstLetter) {
-      // setLetraUm('');
-      global.alert('Your search must have only 1 (one) character');
-    } else {
-      // console.log(url);
-      setReceiveApi(await requestApis(handleOptions()));
+      return global.alert('Your search must have only 1 (one) character');
     }
+
+    // console.log(url);
+    const result = await requestApis(handleOptions());
+    // console.log(result);
+
+    if (result.drinks === null || result.meals === null || result.ingredients === null) {
+      // console.log('bfjdfbvbdfjl');
+      // setReceiveApi([]);
+      global.alert(msgAlertNoScreen);
+    } else {
+      setReceiveApi(result);
+      if (location.pathname === '/meals') {
+        return result.meals.length === 1 && (history
+          .push(`${location.pathname}/${result.meals[0].idMeal}`));
+      }
+      // console.log('s77777777777oo', location.pathname);
+      if (location.pathname === '/drinks') {
+        // console.log('xablau');
+        return result.drinks.length === 1 && (history
+          .push(`${location.pathname}/${result.drinks[0].idDrink}`));
+        // return history.push(url);
+      }
+    }
+    // console.log('aqui', result.meals.length);
+    // console.log('sdubooooooooo', location.pathname);
+    // console.log('testando ele', `${location.pathname}/${result.meals[0].idMeal}`);
+
+    // result.history.push(`/${location.pathname}/${result.(meals[0].idMeal
   };
 
-  console.log(receiveApi);
-  console.log(inputRadio);
-  console.log(inputSearchText);
+  // useEffect(() => {
+  //   console.log(location.pathname);
+  // }, []);
+
+  // console.log(receiveApi);
+  // console.log(inputRadio);
+  // console.log(inputSearchText);
 
   return (
     <div className={ styles.searchBarMain }>
@@ -113,11 +146,6 @@ export default function SearchBar() {
       >
         Buscar
       </button>
-      {/* {
-        receiveApi?.map((e) => (
-          <p key={ e.id }>{e}</p>
-        ))
-      } */}
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import App from '../App';
-import renderWithRouter from './RenderWithRouter';
+import { renderWithRouter } from './RenderWithRouter';
 
 describe('testes da tela de login', () => {
   test('testando tela de login ', () => {
