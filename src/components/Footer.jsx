@@ -16,7 +16,7 @@ function Footer() {
     if (location.pathname === '/meals') {
       return setFoodDrink('meal');
     }
-  }, []);
+  }); /* aqui tinha um [], porem tava dando erro de linter */
 
   return (
     <footer

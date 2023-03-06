@@ -1,7 +1,7 @@
 import React from 'react';
+import Recipes from '../components/comidas/Recipes';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import Recipes from '../components/recipes/Recipes';
 // import SearchBarContext from '../context/SearchBarContext';
 
 // Variaveis
