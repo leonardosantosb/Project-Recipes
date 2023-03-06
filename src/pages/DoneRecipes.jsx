@@ -13,11 +13,33 @@ export default function DoneRecipes() {
     if (clickBtn === 'all') { // faz o map para pegar o card da receita
       return (getRecipes.map((meal, index) => (
         <DoneCard
+          key={ meal.id } // requisito 45 - verifica se o card possui os atributos de uma comida
+          name={ meal.name }
+          id={ meal.id }
+          type={ meal.type }
+          image={ meal.image }
+          category={ meal.category }
+          doneDate={ meal.doneDate }
+          tags={ meal.tags }
+          index={ index }
+          nationality={ meal.nationality }
+          alcoholicOrNot={ meal.alcoholicOrNot }
         />
       )));
     }
     return (getRecipes.filter((meal) => meal.type === clickBtn).map((meal, index) => ( // faz um filter para mostrar o card da receita que foi realizada
       <DoneCard
+        key={ meal.id } // requisito 45 - verifica se o card possui os atributos de uma comida
+        name={ meal.name }
+        id={ meal.id }
+        type={ meal.type }
+        image={ meal.image }
+        category={ meal.category }
+        doneDate={ meal.doneDate }
+        tags={ meal.tags }
+        index={ index }
+        nationality={ meal.nationality }
+        alcoholicOrNot={ meal.alcoholicOrNot }
       />
     )));
   };
