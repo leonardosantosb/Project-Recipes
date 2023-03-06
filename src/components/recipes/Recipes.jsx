@@ -8,7 +8,7 @@ const number12 = 11;
 export default function Recipes() {
   const { receiveApi } = useContext(SearchBarContext);
   const location = useLocation();
-  console.log('url aqui', location.pathname);
+  // console.log('url aqui', location.pathname);
   return (
     <div>
       {

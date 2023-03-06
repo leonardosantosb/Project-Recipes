@@ -31,7 +31,7 @@ export default function SearchBar() {
     }
 
     if (inputRadio === 'name') {
-      console.log(`https://www.the${foodDrink}db.com/api/json/v1/1/search.php?s=${inputSearchText}`);
+      // console.log(`https://www.the${foodDrink}db.com/api/json/v1/1/search.php?s=${inputSearchText}`);
       return `https://www.the${foodDrink}db.com/api/json/v1/1/search.php?s=${inputSearchText}`;
     }
   };
@@ -39,13 +39,13 @@ export default function SearchBar() {
   // console.log(foodDrink);
 
   const handleChange = ({ target: { value, type } }) => {
-    console.log(type);
+    // console.log(type);
     if (type === 'radio') {
-      console.log(value);
+      // console.log(value);
       setInputRadio(value);
     }
     if (type === 'text') {
-      console.log(value);
+      // console.log(value);
       setInputSearchText(value);
     }
   };
@@ -57,7 +57,7 @@ export default function SearchBar() {
 
     // console.log(url);
     const result = await requestApis(handleOptions());
-    console.log(result);
+    // console.log(result);
 
     if (result.drinks === null || result.meals === null || result.ingredients === null) {
       // console.log('bfjdfbvbdfjl');
@@ -71,7 +71,7 @@ export default function SearchBar() {
       }
       // console.log('s77777777777oo', location.pathname);
       if (location.pathname === '/drinks') {
-        console.log('xablau');
+        // console.log('xablau');
         return result.drinks.length === 1 && (history
           .push(`${location.pathname}/${result.drinks[0].idDrink}`));
         // return history.push(url);
