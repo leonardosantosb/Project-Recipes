@@ -1,4 +1,5 @@
 import React from 'react';
+import DoneCard from '../components/comidas/DoneCard';
 import Header from '../components/Header';
 
 export default function DoneRecipes() {
@@ -11,13 +12,15 @@ export default function DoneRecipes() {
     }
     if (clickBtn === 'all') { // faz o map para pegar o card da receita
       return (getRecipes.map((meal, index) => (
-        // card da receita
+        <DoneCard
+        />
       )));
     }
     return (getRecipes.filter((meal) => meal.type === clickBtn).map((meal, index) => ( // faz um filter para mostrar o card da receita que foi realizada
-      // card da receita
+      <DoneCard
+      />
     )));
-  }
+  };
 
   return (
     <>
