@@ -4,8 +4,8 @@ import Login from './components/Login';
 import Meals from './pages/Meals';
 import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
-import DoneRecipies from './pages/DoneRecipies';
-import FavoritesRecipies from './pages/FavoritesRecipies';
+import DoneRecipes from './pages/DoneRecipes';
+import FavoritesRecipes from './pages/FavoritesRecipes';
 import Details from './components/details/Details';
 
 function Routes() {
@@ -42,12 +42,12 @@ function Routes() {
       <Route
         exact
         path="/done-recipes"
-        component={ DoneRecipies /* header sem o ícone de pesquisa */ }
+        component={ DoneRecipes /* header sem o ícone de pesquisa */ }
       />
       <Route
         exact
         path="/favorite-recipes"
-        component={ FavoritesRecipies /* header sem o ícone de pesquisa */ }
+        component={ FavoritesRecipes /* header sem o ícone de pesquisa */ }
       />
     </Switch>
 
