@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import SearchBarContext from '../../context/SearchBarContext';
 import requestApis from '../../services/requestApis';
 
@@ -13,6 +14,7 @@ export default function Recipes() {
   const [categoryFilter, setCategoryFilter] = useState([]); // estado para as categorias após o filtro
   const [currentFilter, setCurrentFilter] = useState([]); // estado somente para armazenar o filtro atual e ajudar com o botão de reset
   const location = useLocation();
+  const history = useHistory();
   // console.log('url aqui', location.pathname);
   useEffect(() => {
     const fetchApi = async () => { // só troquei o nome xablau pra fetchapi
@@ -76,7 +78,6 @@ export default function Recipes() {
     };
     fetchApiDrink();
   };
-
   return (
     <div>
       {
@@ -181,6 +182,7 @@ export default function Recipes() {
                     alt={ comidas.strDrink }
                   />
                 </a>
+
               </div>
             ) : null))}
           </div>
