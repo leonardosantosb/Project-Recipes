@@ -7,19 +7,26 @@ export default function SearchBarProvider({ children }) {
   const [inputSearchText, setInputSearchText] = useState('');
   const [receiveApi, setReceiveApi] = useState([]);
 
+  // salavando o id dos detalhes das comisa/bebidas
+  const [id, setId] = useState('');
+
   const context = useMemo(
     () => ({
       foodDrink,
       inputSearchText,
       receiveApi,
+      id,
       setReceiveApi,
       setFoodDrink,
       setInputSearchText,
+      setId,
     }),
     [
       foodDrink,
       inputSearchText,
       receiveApi,
+      id,
+
     ],
   );
 
