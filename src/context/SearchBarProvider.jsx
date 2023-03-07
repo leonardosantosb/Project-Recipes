@@ -26,10 +26,6 @@ export default function SearchBarProvider({ children }) {
       inputSearchText,
       receiveApi,
       id,
-      setReceiveApi,
-      setFoodDrink,
-      setInputSearchText,
-      setId,
     ],
   );
 
