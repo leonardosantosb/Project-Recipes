@@ -14,7 +14,7 @@ export default function Recipes() {
   const [categoryFilter, setCategoryFilter] = useState([]); // estado para as categorias após o filtro
   const [currentFilter, setCurrentFilter] = useState([]); // estado somente para armazenar o filtro atual e ajudar com o botão de reset
   const location = useLocation();
-  const history = useHistory();
+  // const history = useHistory();
   // console.log('url aqui', location.pathname);
   useEffect(() => {
     const fetchApi = async () => { // só troquei o nome xablau pra fetchapi
