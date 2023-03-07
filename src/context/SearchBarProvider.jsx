@@ -26,7 +26,6 @@ export default function SearchBarProvider({ children }) {
       inputSearchText,
       receiveApi,
       id,
-
     ],
   );
 

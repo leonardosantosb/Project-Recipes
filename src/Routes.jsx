@@ -4,7 +4,6 @@ import Login from './components/Login';
 import Meals from './pages/Meals';
 import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
-
 import DoneRecipes from './pages/DoneRecipes';
 import FavoritesRecipes from './pages/FavoritesRecipes';
 import RecipeDetails from './components/recipeDetails/RecipeDetails';
