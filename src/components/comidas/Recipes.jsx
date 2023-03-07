@@ -25,7 +25,7 @@ export default function Recipes() {
     xablau();
   }, [setReceiveApi, location.pathname]);
   // xablau();
-  console.log('aqui', receiveApi);
+  // console.log('aqui', receiveApi);
   return (
     <div>
       {
