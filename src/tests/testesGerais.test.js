@@ -1,8 +1,7 @@
 import React from 'react';
-import { cleanup, render, screen, act } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-import drinks from './mock';
 import { renderWithRouter } from './RenderWithRouter';
 
 // const mockfetch = () => {
@@ -42,7 +41,7 @@ describe('requisito numero 1', () => {
     userEvent.click(buttonMeals);
     const { pathname } = history.location;
     expect(pathname).toBe('/meals');
-  })
+  });
   test('testa botao para voltar pro perfil ', () => {
     const { history } = renderWithRouter(<App />);
     const email = screen.getByPlaceholderText('Email');
@@ -55,5 +54,5 @@ describe('requisito numero 1', () => {
     userEvent.click(buttonProfile);
     const { pathname } = history.location;
     expect(pathname).toBe('/profile');
-  })
+  });
 });
