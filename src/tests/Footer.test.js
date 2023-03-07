@@ -1,9 +1,9 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import App from '../App';
 import { renderWithRouter } from './RenderWithRouter';
-import userEvent from '@testing-library/user-event';
 
 describe('Teste do Menu inferior', () => {
   test('Verifica a quantidade de imagens e o data-testeId', () => {
