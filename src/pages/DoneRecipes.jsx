@@ -1,12 +1,25 @@
-import React from 'react';
-import DoneCard from '../components/comidas/DoneCard';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
+import shareIcon from '../images/shareIcon.svg';
 
 export default function DoneRecipes() {
+  const [copyLink, setCopyLink] = useState();
+  const [done, setDone] = useState([]);
   const [clickBtn, setClickBtn] = useState('all');
-  const getRecipes = JSON.parse(localStorage.getItem('doneRecipes')); // pega item no localStorage
 
-  const showCard = () => { // função com condição de colocar ou não a receita que foi marcada como 'checkada'
+  const getRecipes = (key, value) => { // pega item no localStorage
+    const doneMeals = localStorage.getItem(key) ? JSON
+      .parse(localStorage.getItem(key)) : value;
+    return doneMeals;
+  };
+
+  useEffect(() => { // coloca o item no estado
+    const getDone = getRecipes('done', []);
+    setDone(getDone);
+  }, []);
+
+  /*   const showCard = () => { // função com condição de colocar ou não a receita que foi marcada como 'checkada'
     if (getRecipes === null || getRecipes.length < 1) { // se igua a null ou menor que 1 retorna mensagem
       return <span>Termine alguma receita</span>;
     }
@@ -23,7 +36,7 @@ export default function DoneRecipes() {
           tags={ meal.tags }
           index={ index }
           nationality={ meal.nationality }
-          alcoholicOrNot={ meal.alcoholicOrNot }
+          alcoholicOrNot={ meal.alcoholicOrNotAlc }
         />
       )));
     }
@@ -39,10 +52,10 @@ export default function DoneRecipes() {
         tags={ meal.tags }
         index={ index }
         nationality={ meal.nationality }
-        alcoholicOrNot={ meal.alcoholicOrNot }
+        alcoholicOrNot={ meal.alcoholicOrNotAlc }
       />
     )));
-  };
+  }; */
 
   return (
     <>
@@ -51,10 +64,10 @@ export default function DoneRecipes() {
       <section>
         <button
           type="button"
-          data-testid="filter-by-all-btn" // data-testid solicitado no read-me
-          onClick={ () => setClickBtn('all') } // usa o click do estado para verificar o recebimento
+          data-testid="filter-by-drink-btn" // data-testid solicitado no read-me
+          onClick={ () => setClickBtn('drink') }
         >
-          All
+          Drinks
         </button>
         <button
           type="button"
@@ -65,16 +78,86 @@ export default function DoneRecipes() {
         </button>
         <button
           type="button"
-          data-testid="filter-by-drink-btn" // data-testid solicitado no read-me
-          onClick={ () => setClickBtn('drink') } // usa o click do estado para verificar o recebimento
+          data-testid="filter-by-all-btn" // data-testid solicitado no read-me
+          onClick={ () => setClickBtn('all') } // usa o click do estado para verificar o recebimento
         >
-          Drinks
+          All
         </button>
       </section>
-      <ul>
-        { showCard() }
-        {/* renderiza o card mapeado e filtrado da função da linha 8 */}
-      </ul>
+      <div>
+        {done.filter((value) => {
+          switch (clickBtn) {
+          case 'meals':
+            return value.type === 'meal';
+          case 'drinks':
+            return value.type === 'drink';
+          default:
+            return value;
+          }
+        }).map((recipe, index) => (
+          <div key={ recipe.id }>
+            <Link
+              to={ `/${recipe.type}s/${recipe.id}` }
+            >
+              <img
+                data-testid={ `${index}-horizontal-image` } // data-testid solicitado no read-me
+                src={ recipe.image }
+                alt={ recipe.id }
+              />
+            </Link>
+            <Link
+              to={ `/${recipe.type}s/${recipe.id}` }
+              data-testid={ `${index}-horizontal-name` } // data-testid solicitado no read-me
+            >
+              { recipe.name }
+            </Link>
+            {
+              recipe.type === 'meal' ? (
+                <p
+                  data-testid={ `${index}-horizontal-top-text` } // data-testid solicitado no read-me / requisito 45 e 46
+                >
+                  {`${recipe.nationality} - ${recipe.category}`}
+                </p>)
+                : (
+                  <p
+                    data-testid={ `${index}-horizontal-top-text` } // data-testid solicitado no read-me
+                  >
+                    {recipe.alcoholicOrNot}
+                  </p>)
+            }
+            <p
+              data-testid={ `${index}-horizontal-done-date` } // data-testid solicitado no read-me
+            >
+              { `Feito em: ${recipe.doneDate} ` }
+            </p>
+            { copyLink && <small>Link copied!</small> }
+            <div>
+              { recipe.tags.map((value) => (
+                <span
+                  data-testid={ `${index}-${value}-horizontal-tag` } // data-testid solicitado no read-me
+                  key={ value }
+                >
+                  {value}
+                </span>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={ () => {
+                navigator.clipboard.writeText(`${window.location.origin}/${type}s/${id}`);
+                setCopyLink(true);
+              } }
+            >
+              <img
+                data-testid={ `${index}-horizontal-share-btn` } // data-testid solicitado no read-me
+                src={ shareIcon }
+                alt="Share Icon"
+              />
+            </button>
+          </div>
+        ))}
+      </div>
     </>
+
   );
 }
