@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import SearchBarContext from '../../context/SearchBarContext';
 import requestApis from '../../services/requestApis';
 
@@ -9,6 +9,7 @@ const number12 = 11;
 export default function Recipes() {
   const { receiveApi, setReceiveApi } = useContext(SearchBarContext);
   const location = useLocation();
+  const history = useHistory();
   // console.log('url aqui', location.pathname);
   useEffect(() => {
     const xablau = async () => {
@@ -25,7 +26,7 @@ export default function Recipes() {
     xablau();
   }, [setReceiveApi, location.pathname]);
   // xablau();
-  console.log('aqui', receiveApi);
+  // console.log('aqui', receiveApi);
   return (
     <div>
       {
@@ -41,6 +42,15 @@ export default function Recipes() {
                   src={ comidas.strMealThumb }
                   alt={ comidas.strMeal }
                 />
+                <button
+                  onClick={ async () => {
+                    // setId(comidas.idMeal);
+                    history.push(`meals/${comidas.idMeal}`);
+                  } }
+                >
+                  Detalhes
+
+                </button>
               </div>
             ) : null))}
           </div>
@@ -60,6 +70,15 @@ export default function Recipes() {
                   src={ comidas.strDrinkThumb }
                   alt={ comidas.strDrink }
                 />
+                <button
+                  onClick={ async () => {
+                    // setId(comidas.idMeal);
+                    history.push(`drinks/${comidas.idDrink}`);
+                  } }
+                >
+                  Detalhes
+
+                </button>
               </div>
             ) : null))}
           </div>
