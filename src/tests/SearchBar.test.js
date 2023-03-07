@@ -175,11 +175,41 @@ describe('testes da tela de SearchBar', () => {
     // jest.spyOn(global, 'alert').mockReturnValue(msg);
 
     await waitFor(() => {
-      expect(global.alert).toHaveBeenCalled(1);
+      expect(global.alert).toHaveBeenCalled();
     });
     // expect(history.location.phaname).toBe('/17222');
 
     const profile = screen.getByTestId('profile-top-btn');
     userEvent.click(profile);
   });
+  test('teste 5', async () => {
+    const { history } = renderWithRouter(<App />);
+    const email = screen.getByPlaceholderText('Email');
+    userEvent.type(email, 'teste@teste.com');
+    const senha = screen.getByPlaceholderText('Password');
+    userEvent.type(senha, '1231234');
+    const buttonEnter = screen.getByRole('button', { name: /enter/i });
+    userEvent.click(buttonEnter);
+    const buttonDrinks = screen.getByAltText('DrinksIcon');
+    userEvent.click(buttonDrinks);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/drinks');
+    await waitFor(() => {
+      const firstImg = screen.getByTestId('0-recipe-card');
+      expect(firstImg).toBeInTheDocument();
+    });
+  });
+  // test('teste 6', async () => {
+  //   const { history } = renderWithRouter(<App />);
+  //   const email = screen.getByPlaceholderText('Email');
+  //   userEvent.type(email, 'teste@teste.com');
+  //   const senha = screen.getByPlaceholderText('Password');
+  //   userEvent.type(senha, '1231234');
+  //   const buttonEnter = screen.getByRole('button', { name: /enter/i });
+  //   userEvent.click(buttonEnter);
+  //   const buttonMeals = screen.getByTestId('meals-bottom-btn');
+  //   userEvent.click(buttonMeals);
+  //   const { pathname } = history.location;
+  //   expect(pathname).toBe('/meals');
+  // });
 });

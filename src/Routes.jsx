@@ -6,7 +6,6 @@ import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoritesRecipes from './pages/FavoritesRecipes';
-// import Details from './components/details/Details';
 import RecipeDetails from './components/recipeDetails/RecipeDetails';
 
 function Routes() {

@@ -28,16 +28,15 @@ function Footer() {
     >
       <button
         type="button"
+        data-testid="drinks-bottom-btn"
         onClick={ () => {
           setFoodDrink('cocktail');
           history.push('/drinks');
         } }
-        data-testid="drinks-bottom-btn"
+        src={ IconDrink }
+        alt="DrinksIcon"
       >
-        <img
-          src={ IconDrink }
-          alt="DrinksIcon"
-        />
+        <img src={ IconDrink } alt="DrinksIcon" />
       </button>
 
       <button
@@ -47,11 +46,10 @@ function Footer() {
           history.push('/meals');
         } }
         data-testid="meals-bottom-btn"
+        src={ IconMeal }
+        alt="MealIcon"
       >
-        <img
-          src={ IconMeal }
-          alt="MealIcon"
-        />
+        <img src={ IconMeal } alt="MealIcon" />
       </button>
     </footer>
   );
