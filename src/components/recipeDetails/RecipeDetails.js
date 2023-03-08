@@ -4,8 +4,14 @@ import { useHistory, useLocation } from 'react-router-dom';
 import Copys from 'clipboard-copy';
 import requestApis from '../../services/requestApis';
 import Carousels from '../carousels/Carousels';
+
+// styles
 import styles from './RecipeDetails.module.css';
 import { getLocalStorage, setLocalStorage } from '../../helpers/localStorage';
+
+// imgs
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
 const treze = 13;
 
@@ -14,6 +20,7 @@ export default function RecipeDetails() {
   // const { id } = useContext(SearchBarContext);
 
   const [msgHtml, setMsgHtml] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   // salvando os dados da comidas/bebidas no state local.
   const [detalhesApi, setDetalhesApi] = useState({});
@@ -64,13 +71,43 @@ export default function RecipeDetails() {
     console.log(t);
   };
 
+  // const savedLocalStorage = (obj) => {
+  //   // const obj = { id: , type, nationality, category, alcoholicOrNot, name, image };
+  //   const dados = getLocalStorage('favoriteRecipes');
+  //   setLocalStorage('favoriteRecipes', [...dados, dados.filter((e) =>)]);
+  // };
+
+  // const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+
+  // useEffect(() => {
+  //   const favorites = getLocalStorage('favoriteRecipes') || [];
+  //   setFavoriteRecipes(favorites);
+  // }, []);
+
   const savedLocalStorage = (obj) => {
-    // const obj = { id: , type, nationality, category, alcoholicOrNot, name, image };
-    const dados = getLocalStorage('favoriteRecipes');
-    setLocalStorage('favoriteRecipes', [...dados, obj]);
+    const favorites = getLocalStorage('favoriteRecipes') || [];
+    const existingFavorite = favorites.filter((favorite) => favorite.id === obj.id)[0];
+    // console.log('favorites', favorites);
+    // console.log('existingFavorite', existingFavorite);
+    if (!existingFavorite) {
+      setIsFavorite(true);
+      // A comida não está favoritada, então vamos adicioná-la
+      setLocalStorage('favoriteRecipes', [...favorites, obj]);
+    } else {
+      setIsFavorite(false);
+      // A comida já está favoritada, então vamos removê-la
+      const newFavorites = favorites.filter((favorite) => favorite.id !== obj.id);
+      // console.log('newFavorites', newFavorites);
+      setLocalStorage('favoriteRecipes', newFavorites);
+    }
   };
 
-  console.log(detalhesApi);
+  useEffect(() => {
+    console.log('ddscsd', getLocalStorage('favoriteRecipes')[0]);
+    savedLocalStorage([getLocalStorage('favoriteRecipes')[0]]);
+  }, []);
+
+  // console.log(detalhesApi);
   return (
     <div>
       RecipeDetails
@@ -166,12 +203,10 @@ export default function RecipeDetails() {
                   />
                 </div>
               )
-
             }
 
             {/* Requisito 34 criando o obj pedido */}
             <button
-              data-testid="favorite-btn"
               onClick={ () => savedLocalStorage({
                 id: id[2],
                 type,
@@ -182,8 +217,13 @@ export default function RecipeDetails() {
                 image: e[imgDinamic],
               }) }
             >
-              favoritar
+              <img
+                data-testid="favorite-btn"
+                src={ !isFavorite ? whiteHeartIcon : blackHeartIcon }
+                alt=""
+              />
             </button>
+
             <button
               className={ styles.startRecipe }
               data-testid="start-recipe-btn"
@@ -205,21 +245,6 @@ export default function RecipeDetails() {
         ))
       }
       <Carousels />
-      {/* <button
-        data-testid="favorite-btn"
-        onClick={ savedLocalStorage }
-      >
-        favoritar
-      </button> */}
-      {/* <button
-        data-testid="share-btn"
-        onClick={ () => {
-          Copys(location.pathname);
-          global.alert('Link copied!');
-        } }
-      >
-        Copy
-      </button> */}
     </div>
   );
 }
