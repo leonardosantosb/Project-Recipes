@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 // import SearchBarContext from '../../context/SearchBarContext';
+import Copys from 'clipboard-copy';
 import requestApis from '../../services/requestApis';
+import Carousels from '../carousels/Carousels';
+import styles from './RecipeDetails.module.css';
+import { getLocalStorage, setLocalStorage } from '../../helpers/localStorage';
 
 const treze = 13;
+
 export default function RecipeDetails() {
   // pegando o id do contexto global
   // const { id } = useContext(SearchBarContext);
+
+  const [msgHtml, setMsgHtml] = useState(false);
 
   // salvando os dados da comidas/bebidas no state local.
   const [detalhesApi, setDetalhesApi] = useState({});
 
   const location = useLocation();
+  const history = useHistory();
 
   const id = location.pathname.split('/');
 
@@ -26,22 +34,41 @@ export default function RecipeDetails() {
   // console.log(imgDinamic);
   const titleName = `str${primeiraLetra}${chave}`; // para o titulo.
 
+  // usando para criar o a chave type do localStorage
+  const type = url.slice(0, url.length - 1);
+
   // ao entra na pagina de datalhes a função executa o didMount e faz a requisição da API usando o id vindo do location.pathname.split('/').
   useEffect(() => {
     const pegarDetalhesApi = async () => {
       let redirec;
+      // let local;
       if (location.pathname.includes('meals')) {
         redirec = await requestApis(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id[2]}`);
         // console.log(redirec);
+        // local = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
       }
       if (location.pathname?.includes('drinks')) {
         redirec = await requestApis(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id[2]}`);
+        // local = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
       }
-      // console.log('d', id);
       return setDetalhesApi(redirec);
     };
     pegarDetalhesApi();
+    // const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    // inProgressRecipes
+    // console.log(doneRecipes);
   }, []);
+
+  const inProgressRecipe = async () => {
+    const t = history.push(`${location.pathname}/in-progress`);
+    console.log(t);
+  };
+
+  const savedLocalStorage = (obj) => {
+    // const obj = { id: , type, nationality, category, alcoholicOrNot, name, image };
+    const dados = getLocalStorage('favoriteRecipes');
+    setLocalStorage('favoriteRecipes', [...dados, obj]);
+  };
 
   console.log(detalhesApi);
   return (
@@ -135,17 +162,64 @@ export default function RecipeDetails() {
                     allow="accelerometer;
                     autoplay;
                     clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
+                    allowFullScreen
                   />
                 </div>
               )
 
             }
 
+            {/* Requisito 34 criando o obj pedido */}
+            <button
+              data-testid="favorite-btn"
+              onClick={ () => savedLocalStorage({
+                id: id[2],
+                type,
+                nationality: e.strArea ? e.strArea : '',
+                category: e.strCategory,
+                alcoholicOrNot: e.strAlcoholic ? e.strAlcoholic : '',
+                name: e[titleName],
+                image: e[imgDinamic],
+              }) }
+            >
+              favoritar
+            </button>
+            <button
+              className={ styles.startRecipe }
+              data-testid="start-recipe-btn"
+              onClick={ inProgressRecipe }
+            >
+              Continue Recipe
+            </button>
+            <button
+              data-testid="share-btn"
+              onClick={ () => {
+                Copys(`http://localhost:3000${location.pathname}`);
+                setMsgHtml(true);
+              } }
+            >
+              compartilhar
+            </button>
+            {msgHtml && <p>Link copied!</p>}
           </div>
         ))
       }
-
+      <Carousels />
+      {/* <button
+        data-testid="favorite-btn"
+        onClick={ savedLocalStorage }
+      >
+        favoritar
+      </button> */}
+      {/* <button
+        data-testid="share-btn"
+        onClick={ () => {
+          Copys(location.pathname);
+          global.alert('Link copied!');
+        } }
+      >
+        Copy
+      </button> */}
     </div>
   );
 }
