@@ -1,22 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 // import SearchBarContext from '../../context/SearchBarContext';
+import Copys from 'clipboard-copy';
 import requestApis from '../../services/requestApis';
+import Carousels from '../carousels/Carousels';
+
+// styles
+import styles from './RecipeDetails.module.css';
+import { getLocalStorage, setLocalStorage } from '../../helpers/localStorage';
+
+// imgs
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
 
 const treze = 13;
+
 export default function RecipeDetails() {
   // pegando o id do contexto global
   // const { id } = useContext(SearchBarContext);
+
+  const [msgHtml, setMsgHtml] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   // salvando os dados da comidas/bebidas no state local.
   const [detalhesApi, setDetalhesApi] = useState({});
 
   const location = useLocation();
+  const history = useHistory();
 
   const id = location.pathname.split('/');
 
   const url = id[1];/* usando para deixa a renderização dos detalhes dinamica, de acordo co a url */
   console.log(url);
+  console.log(id);
 
   // Crinado linke de img dinamico para meals/drinks.
   const chave = url.slice(1, url.length - 1); // retirando a ultima letra.
@@ -26,24 +42,60 @@ export default function RecipeDetails() {
   // console.log(imgDinamic);
   const titleName = `str${primeiraLetra}${chave}`; // para o titulo.
 
+  // usando para criar o a chave type do localStorage
+  const type = url.slice(0, url.length - 1);
+
   // ao entra na pagina de datalhes a função executa o didMount e faz a requisição da API usando o id vindo do location.pathname.split('/').
   useEffect(() => {
     const pegarDetalhesApi = async () => {
       let redirec;
+      // let local;
       if (location.pathname.includes('meals')) {
         redirec = await requestApis(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id[2]}`);
         // console.log(redirec);
+        // local = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
       }
       if (location.pathname?.includes('drinks')) {
         redirec = await requestApis(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id[2]}`);
+        // local = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
       }
-      // console.log('d', id);
       return setDetalhesApi(redirec);
     };
     pegarDetalhesApi();
+    // const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    // inProgressRecipes
+    // console.log(doneRecipes);
   }, []);
 
-  console.log(detalhesApi);
+  const inProgressRecipe = async () => {
+    const t = history.push(`${location.pathname}/in-progress`);
+    console.log(t);
+  };
+
+  const savedLocalStorage = (obj) => {
+    const favorites = getLocalStorage('favoriteRecipes') || [];
+    const existingFavorite = favorites.filter((favorite) => favorite.id === obj.id)[0];
+    if (!existingFavorite) {
+      setIsFavorite(true);
+      // A comida não está favoritada, então vamos adicioná-la
+      setLocalStorage('favoriteRecipes', [...favorites, obj]);
+    } else {
+      setIsFavorite(false);
+      // A comida já está favoritada, então vamos removê-la
+      const newFavorites = favorites.filter((favorite) => favorite.id !== obj.id);
+      setLocalStorage('favoriteRecipes', newFavorites);
+    }
+  };
+
+  useEffect(() => {
+    const isFavorites = getLocalStorage('favoriteRecipes');
+    const check = isFavorites.find((e) => e.id === id[2]);
+    if (check) {
+      console.log('deuuuuuuuuuuuuuuuuu');
+      setIsFavorite(true);
+    }
+  }, []);
+  // console.log(detalhesApi);
   return (
     <div>
       RecipeDetails
@@ -135,17 +187,52 @@ export default function RecipeDetails() {
                     allow="accelerometer;
                     autoplay;
                     clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
+                    allowFullScreen
                   />
                 </div>
               )
-
             }
 
+            {/* Requisito 34 criando o obj pedido */}
+            <button
+              onClick={ () => savedLocalStorage({
+                id: id[2],
+                type,
+                nationality: e.strArea ? e.strArea : '',
+                category: e.strCategory,
+                alcoholicOrNot: e.strAlcoholic ? e.strAlcoholic : '',
+                name: e[titleName],
+                image: e[imgDinamic],
+              }) }
+            >
+              <img
+                data-testid="favorite-btn"
+                src={ !isFavorite ? whiteHeartIcon : blackHeartIcon }
+                alt=""
+              />
+            </button>
+
+            <button
+              className={ styles.startRecipe }
+              data-testid="start-recipe-btn"
+              onClick={ inProgressRecipe }
+            >
+              Continue Recipe
+            </button>
+            <button
+              data-testid="share-btn"
+              onClick={ () => {
+                Copys(`http://localhost:3000${location.pathname}`);
+                setMsgHtml(true);
+              } }
+            >
+              compartilhar
+            </button>
+            {msgHtml && <p>Link copied!</p>}
           </div>
         ))
       }
-
+      <Carousels />
     </div>
   );
 }

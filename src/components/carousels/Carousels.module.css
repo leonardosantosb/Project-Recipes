@@ -1,0 +1,22 @@
+.carrosel {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 10vw;
+  height: 100%;
+  margin: 0 0 30px;
+  overflow-y: auto;
+  position: relative;
+  width: 100vw;
+}
+
+.carroselitem {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.carroselImg {
+  position: relative;
+  width: calc((100vw - 40px - 10vw) / 2);
+}
