@@ -32,6 +32,7 @@ export default function RecipeDetails() {
 
   const url = id[1];/* usando para deixa a renderização dos detalhes dinamica, de acordo co a url */
   console.log(url);
+  console.log(id);
 
   // Crinado linke de img dinamico para meals/drinks.
   const chave = url.slice(1, url.length - 1); // retirando a ultima letra.
@@ -71,24 +72,9 @@ export default function RecipeDetails() {
     console.log(t);
   };
 
-  // const savedLocalStorage = (obj) => {
-  //   // const obj = { id: , type, nationality, category, alcoholicOrNot, name, image };
-  //   const dados = getLocalStorage('favoriteRecipes');
-  //   setLocalStorage('favoriteRecipes', [...dados, dados.filter((e) =>)]);
-  // };
-
-  // const [favoriteRecipes, setFavoriteRecipes] = useState([]);
-
-  // useEffect(() => {
-  //   const favorites = getLocalStorage('favoriteRecipes') || [];
-  //   setFavoriteRecipes(favorites);
-  // }, []);
-
   const savedLocalStorage = (obj) => {
     const favorites = getLocalStorage('favoriteRecipes') || [];
     const existingFavorite = favorites.filter((favorite) => favorite.id === obj.id)[0];
-    // console.log('favorites', favorites);
-    // console.log('existingFavorite', existingFavorite);
     if (!existingFavorite) {
       setIsFavorite(true);
       // A comida não está favoritada, então vamos adicioná-la
@@ -97,16 +83,18 @@ export default function RecipeDetails() {
       setIsFavorite(false);
       // A comida já está favoritada, então vamos removê-la
       const newFavorites = favorites.filter((favorite) => favorite.id !== obj.id);
-      // console.log('newFavorites', newFavorites);
       setLocalStorage('favoriteRecipes', newFavorites);
     }
   };
 
   useEffect(() => {
-    console.log('ddscsd', getLocalStorage('favoriteRecipes')[0]);
-    savedLocalStorage([getLocalStorage('favoriteRecipes')[0]]);
+    const isFavorites = getLocalStorage('favoriteRecipes');
+    const check = isFavorites.find((e) => e.id === id[2]);
+    if (check) {
+      console.log('deuuuuuuuuuuuuuuuuu');
+      setIsFavorite(true);
+    }
   }, []);
-
   // console.log(detalhesApi);
   return (
     <div>
