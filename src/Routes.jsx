@@ -5,8 +5,8 @@ import Meals from './pages/Meals';
 import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
-import FavoritesRecipies from './pages/FavoritesRecipies';
-import Details from './components/details/Details';
+import FavoritesRecipes from './pages/FavoritesRecipes';
+import RecipeDetails from './components/recipeDetails/RecipeDetails';
 
 function Routes() {
   return (
@@ -17,12 +17,12 @@ function Routes() {
       <Route
         exact
         path="/meals/:id"
-        component={ Details /* não pode possuir header */ }
+        component={ RecipeDetails /* não pode possuir header */ }
       />
       <Route
         exact
         path="/drinks/:id"
-        component={ Details /* não pode possuir header */ }
+        component={ RecipeDetails /* não pode possuir header */ }
       />
       <Route
         exact
@@ -47,7 +47,7 @@ function Routes() {
       <Route
         exact
         path="/favorite-recipes"
-        component={ FavoritesRecipies /* header sem o ícone de pesquisa */ }
+        component={ FavoritesRecipes /* header sem o ícone de pesquisa */ }
       />
     </Switch>
 
