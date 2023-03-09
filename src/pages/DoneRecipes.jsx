@@ -19,7 +19,7 @@ export default function DoneRecipes() {
     setDone(getDone);
   }, []);
 
-  /*   const showCard = () => { // função com condição de colocar ou não a receita que foi marcada como 'checkada'
+  const showCard = () => { // função com condição de colocar ou não a receita que foi marcada como 'checkada'
     if (getRecipes === null || getRecipes.length < 1) { // se igua a null ou menor que 1 retorna mensagem
       return <span>Termine alguma receita</span>;
     }
@@ -55,7 +55,7 @@ export default function DoneRecipes() {
         alcoholicOrNot={ meal.alcoholicOrNotAlc }
       />
     )));
-  }; */
+  };
 
   return (
     <>
