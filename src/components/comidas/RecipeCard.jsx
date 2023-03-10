@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import shareIcon from '../../images';
+import shareIcon from '../../images/shareIcon.svg';
 
-function Card({
+export default function RecipeCard({
   index,
   id,
   category,
@@ -72,11 +72,9 @@ function Card({
   );
 }
 
-Card.propTypes = {
+RecipeCard.propTypes = {
   id: PropTypes.number,
   img: PropTypes.string,
   name: PropTypes.string,
   index: PropTypes.number,
 }.isRequired;
-
-export default Card;
