@@ -31,8 +31,8 @@ export default function RecipeDetails() {
   const id = location.pathname.split('/');
 
   const url = id[1];/* usando para deixa a renderização dos detalhes dinamica, de acordo co a url */
-  console.log(url);
-  console.log(id);
+  // console.log(url);
+  // console.log(id);
 
   // Crinado linke de img dinamico para meals/drinks.
   const chave = url.slice(1, url.length - 1); // retirando a ultima letra.
@@ -52,24 +52,22 @@ export default function RecipeDetails() {
       // let local;
       if (location.pathname.includes('meals')) {
         redirec = await requestApis(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id[2]}`);
-        // console.log(redirec);
-        // local = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
       }
       if (location.pathname?.includes('drinks')) {
         redirec = await requestApis(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id[2]}`);
-        // local = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
       }
       return setDetalhesApi(redirec);
     };
     pegarDetalhesApi();
-    // const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    // inProgressRecipes
-    // console.log(doneRecipes);
+    const isFavorites = getLocalStorage('favoriteRecipes');
+    setIsFavorite(isFavorites.find((e) => e.id === id[2]));
+    // if (check) {
+    //   setIsFavorite(true);
+    // }
   }, []);
 
   const inProgressRecipe = async () => {
-    const t = history.push(`${location.pathname}/in-progress`);
-    console.log(t);
+    history.push(`${location.pathname}/in-progress`);
   };
 
   const savedLocalStorage = (obj) => {
@@ -87,15 +85,14 @@ export default function RecipeDetails() {
     }
   };
 
-  useEffect(() => {
-    const isFavorites = getLocalStorage('favoriteRecipes');
-    const check = isFavorites.find((e) => e.id === id[2]);
-    if (check) {
-      console.log('deuuuuuuuuuuuuuuuuu');
-      setIsFavorite(true);
-    }
-  }, []);
-  // console.log(detalhesApi);
+  // useEffect(() => {
+  //   const isFavorites = getLocalStorage('favoriteRecipes');
+  //   const check = isFavorites.find((e) => e.id === id[2]);
+  //   if (check) {
+  //     setIsFavorite(true);
+  //   }
+  // }, []);
+
   return (
     <div>
       RecipeDetails
@@ -198,9 +195,9 @@ export default function RecipeDetails() {
               onClick={ () => savedLocalStorage({
                 id: id[2],
                 type,
-                nationality: e.strArea ? e.strArea : '',
+                nationality: e.strArea || '',
                 category: e.strCategory,
-                alcoholicOrNot: e.strAlcoholic ? e.strAlcoholic : '',
+                alcoholicOrNot: e.strAlcoholic || '',
                 name: e[titleName],
                 image: e[imgDinamic],
               }) }
@@ -228,6 +225,14 @@ export default function RecipeDetails() {
             >
               compartilhar
             </button>
+            {/* <button
+              data-testid="share-bts"
+              onClick={ () => {
+                setMsgHtml(false);
+              } }
+            >
+              compartilhar
+            </button> */}
             {msgHtml && <p>Link copied!</p>}
           </div>
         ))
